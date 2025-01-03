@@ -4,19 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/jvm.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/maven.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Modelo/Libro.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
+    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Primer commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modelo/Libro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelo/Libro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +55,14 @@
       <option name="presentableId" value="Default" />
       <updated>1735170555885</updated>
     </task>
+    <task id="LOCAL-00001" summary="Primer commit">
+      <created>1735652651909</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1735652651909</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -74,5 +75,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Primer commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Primer commit" />
   </component>
 </project>
