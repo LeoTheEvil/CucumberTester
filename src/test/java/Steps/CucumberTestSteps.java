@@ -23,7 +23,11 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 @CucumberContextConfiguration
 public class CucumberTestSteps {
+
     Libro libro;
+    Libro libro1;
+    Libro libro2;
+    Libro libro3;
     Exception error = null;
 
     HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
@@ -67,54 +71,39 @@ public class CucumberTestSteps {
     }
     @Given("es el primer libro")
     public void primerLibro() {
-        Libro libro1 = new Libro(libro.id, libro.title, libro.author, libro.genre);
+        libro1 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format(
-                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-          );
+            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro1.title(), libro1.author(), libro1.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
     }
     @Given("es el segundo libro")
     public void segundoLibro() {
-        Libro libro2 = new Libro(libro.id, libro.title, libro.author, libro.genre);
+        libro2 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format(
-                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-            );
+            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro2.title(), libro2.author(), libro2.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
     }
     @Given("es el tercer libro")
     public void tercerLibro() {
-        Libro libro3 = new Libro(libro.id, libro.title, libro.author, libro.genre);
+        libro3 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format(
-                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-            );
+            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro3.title(), libro3.author(), libro3.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -125,8 +114,8 @@ public class CucumberTestSteps {
             String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
             assert libro.id() != null : "El libro no tiene un ID asignado";
         } catch (Exception e) {
             error = e;
@@ -135,16 +124,11 @@ public class CucumberTestSteps {
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
         try {
-            String url=String.format(
-                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-            );
+            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro.title(), libro.author(), libro.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -166,16 +150,11 @@ public class CucumberTestSteps {
     public void usuarioHacePutAutor() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
         try {
-            String url=String.format(
-                "http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-            );
+            String url=String.format("http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s", libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -184,16 +163,11 @@ public class CucumberTestSteps {
     public void usuarioHacePutAutorVacio() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
         try {
-            String url=String.format(
-                "http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
-                txtTitle.GetText(),
-                txtAuthor.GetText(),
-                txtGenre.GetText()
-            );
+            String url=String.format("http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s", libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -203,9 +177,9 @@ public class CucumberTestSteps {
         try {
             String url=String.format("http://localhost:8081/eliminarLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -215,9 +189,9 @@ public class CucumberTestSteps {
         try {
             String url=String.format("http://localhost:8081/obtenerTodosLibros");
             HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
-                        .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                        .GET().build(),HttpResponse.BodyHandlers.ofString());
+                    HttpRequest.newBuilder(new URI(url))
+                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
+                            .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
         }
@@ -261,16 +235,16 @@ public class CucumberTestSteps {
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
         assert libro1.id() != null : "El Libro no tiene un ID asignado";
-        Libro libroGuardado1 = App.obtenerLibro(libro1.getId());
+        Libro libroGuardado1 = App.obtenerLibro(libro1.id());
         assert libroGuardado1.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado1.get().title().equals(libro1.getTitle()) : "Titulo del libro no coincide";
+        assert libroGuardado1.title().equals(libro1.title()) : "Titulo del libro no coincide";
         assert libro2.id() != null : "El libro no tiene un ID asignado";
-        Libro libroGuardado2 = App.obtenerLibro(libro2.getId());
+        Libro libroGuardado2 = App.obtenerLibro(libro2.id());
         assert libroGuardado2.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado2.get().title().equals(libro2.getTitle()) : "Titulo del libro no coincide";
+        assert libroGuardado2.title().equals(libro2.title()) : "Titulo del libro no coincide";
         assert libro3.id() != null : "El libro no tiene un ID asignado";
-        Libro libroGuardado3 = App.obtenerLibro(libro3.id);
+        Libro libroGuardado3 = App.obtenerLibro(libro3.id());
         assert libroGuardado3.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado3.get().title().equals(libro3.title()) : "Titulo del libro no coincide";
+        assert libroGuardado3.title().equals(libro3.title()) : "Titulo del libro no coincide";
     }
 }
