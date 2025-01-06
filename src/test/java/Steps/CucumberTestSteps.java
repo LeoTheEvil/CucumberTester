@@ -56,7 +56,7 @@ public class CucumberTestSteps {
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert libro.getId() == null : "Libro encontrado";
+            assert libro.id() == null : "Libro encontrado";
         } catch (Exception e) {
             error = e;
         }
@@ -114,7 +114,7 @@ public class CucumberTestSteps {
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
-        assert libro.getId() != null : "El libro no tiene un ID asignado";
+        assert libro.id() != null : "El libro no tiene un ID asignado";
     }
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
@@ -137,14 +137,14 @@ public class CucumberTestSteps {
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert libro.getId() != null : "El libro no tiene un ID asignado";
+            assert libro.id() != null : "El libro no tiene un ID asignado";
         } catch (Exception e) {
             error = e;
         }
     }
     @When("el usuario hace un Put de autor Miguel de Cervantes Saavedra")
     public void usuarioHacePutAutor() {
-        libro.setAuthor("Miguel de Cervantes Saavedra");
+        Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
         String url=String.format(
                 "localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
@@ -158,7 +158,7 @@ public class CucumberTestSteps {
     }
     @When("el usuario hace un Put de autor vacio")
     public void usuarioHacePutAutorVacio() {
-        libro.setAuthor("");
+        Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
         String url=String.format(
                 "localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
@@ -188,25 +188,25 @@ public class CucumberTestSteps {
     }
     @Then("el libro es guardado")
     public void libroGuardado() {
-        assert libro.getId() != null : "El libro no tiene un ID asignado";
-        Optional<Libro> libroGuardado = App.obtenerLibro(libro.getId());
+        assert libro.id() != null : "El libro no tiene un ID asignado";
+        Optional<Libro> libroGuardado = App.obtenerLibro(libro.id());
         assert libroGuardado.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado.get().getTitle().equals(libro.getTitle()) : "Titulo del libro no coincide";
+        assert libroGuardado.get().title().equals(libro.title()) : "Titulo del libro no coincide";
     }
     @Then("el autor del libro es actualizado a Miguel de Cervantes Saavedra")
     public void libroActualizado() {
-        assert libro.getId() != null : "El Libro no tiene un ID asignado";
-        Optional<Libro> libroActualizado = App.obtenerLibro(libro.getId());
+        assert libro.id() != null : "El Libro no tiene un ID asignado";
+        Optional<Libro> libroActualizado = App.obtenerLibro(libro.id());
         assert libroActualizado.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroActualizado.get().getAuthor().equals("Miguel de Cervantes Saavedra") : "El autor del libro no coincide";
+        assert libroActualizado.get().author().equals("Miguel de Cervantes Saavedra") : "El autor del libro no coincide";
     }
     @Then("el libro es eliminado")
     public void libroEliminado() {
-        assert libro.getId() == null : "El Libro no pudo ser eliminado";
+        assert libro.id() == null : "El Libro no pudo ser eliminado";
     }
     @Then("el libro es rechazado")
     public void libroRechazado() {
-        assert libro.getId() == null : "El Libro no pudo ser eliminado";
+        assert libro.id() == null : "El Libro no pudo ser eliminado";
     }
     @Then("mensaje de error {string}")
     public void libroNoEncontrado(String mensajeEsperado) {
@@ -217,24 +217,24 @@ public class CucumberTestSteps {
     }
     @Then("la actualizacion es rechazada")
     public void ascensoRechazado() {
-        assert libro.getId() != null : "El Libro no tiene un ID asignado";
-        Optional<Libro> libroActualizado = App.obtenerLibro(libro.getId());
+        assert libro.id() != null : "El Libro no tiene un ID asignado";
+        Optional<Libro> libroActualizado = App.obtenerLibro(libro.id());
         assert libroActualizado.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroActualizado.get().getAuthor().equals("Miguel de Cervantes") : "El autor del libro no coincide";
+        assert libroActualizado.get().author().equals("Miguel de Cervantes") : "El autor del libro no coincide";
     }
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
-        assert libro1.getId() != null : "El Libro no tiene un ID asignado";
+        assert libro1.id() != null : "El Libro no tiene un ID asignado";
         Libro libroGuardado1 = App.obtenerLibro(libro1.getId());
         assert libroGuardado1.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado1.get().getTitle().equals(libro1.getTitle()) : "Titulo del libro no coincide";
-        assert libro2.getId() != null : "El libro no tiene un ID asignado";
+        assert libroGuardado1.get().title().equals(libro1.getTitle()) : "Titulo del libro no coincide";
+        assert libro2.id() != null : "El libro no tiene un ID asignado";
         Libro libroGuardado2 = App.obtenerLibro(libro2.getId());
         assert libroGuardado2.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado2.get().getTitle().equals(libro2.getTitle()) : "Titulo del libro no coincide";
-        assert libro3.getId() != null : "El libro no tiene un ID asignado";
-        Libro libroGuardado3 = App.obtenerLibro(libro3.getId());
+        assert libroGuardado2.get().title().equals(libro2.getTitle()) : "Titulo del libro no coincide";
+        assert libro3.id() != null : "El libro no tiene un ID asignado";
+        Libro libroGuardado3 = App.obtenerLibro(libro3.id);
         assert libroGuardado3.isPresent() : "Libro no encontrado en el repositorio";
-        assert libroGuardado3.get().getTitle().equals(libro3.getTitle()) : "Titulo del libro no coincide";
+        assert libroGuardado3.get().title().equals(libro3.title()) : "Titulo del libro no coincide";
     }
 }
