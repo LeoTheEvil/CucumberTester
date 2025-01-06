@@ -51,7 +51,7 @@ public class CucumberTestSteps {
     @Given("un id de libro vacio")
     public void idLibroVacio() {
         try {
-            String url=String.format("localhost:8081/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -68,71 +68,91 @@ public class CucumberTestSteps {
     @Given("es el primer libro")
     public void primerLibro() {
         Libro libro1 = new Libro(libro.id, libro.title, libro.author, libro.genre);
-        String url=String.format(
-                "localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+          );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @Given("es el segundo libro")
     public void segundoLibro() {
         Libro libro2 = new Libro(libro.id, libro.title, libro.author, libro.genre);
-        String url=String.format(
-                "localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+            );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @Given("es el tercer libro")
     public void tercerLibro() {
         Libro libro3 = new Libro(libro.id, libro.title, libro.author, libro.genre);
-        String url=String.format(
-                "localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+            );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el libro existe en la base de datos")
     public void libroExisteEnBaseDeDatos() {
-        String url=String.format("localhost:8081/obtenerLibro?id=%d", libro.id());
-        HttpResponse<String> response = client.send(
-                HttpRequest.newBuilder(new URI(url))
+        try {
+            String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
+            HttpResponse<String> response = client.send(
+                    HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
-        assert libro.id() != null : "El libro no tiene un ID asignado";
+            assert libro.id() != null : "El libro no tiene un ID asignado";
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
-        String url=String.format(
-                "localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+            );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el usuario hace un Get")
     public void usuarioHaceGet() {
         try {
-            String url=String.format("localhost:8081/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -145,46 +165,62 @@ public class CucumberTestSteps {
     @When("el usuario hace un Put de autor Miguel de Cervantes Saavedra")
     public void usuarioHacePutAutor() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
-        String url=String.format(
-                "localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+            );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el usuario hace un Put de autor vacio")
     public void usuarioHacePutAutorVacio() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
-        String url=String.format(
-                "localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
+        try {
+            String url=String.format(
+                "http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s",
                 txtTitle.GetText(),
                 txtAuthor.GetText(),
                 txtGenre.GetText()
-        );
-        HttpResponse<String> response = client.send(
+            );
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el usuario hace un Delete")
     public void usuarioHaceDelete() {
-        String url=String.format("localhost:8081/eliminarLibro?id=%d", libro.id());
-        HttpResponse<String> response = client.send(
+        try {
+            String url=String.format("http://localhost:8081/eliminarLibro?id=%d", libro.id());
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @When("el usuario lista todos los libros empezando por {int} en paginas de {int}}")
     public void usuarioListaTodosLibros(int offset, int size) {
-        String url=String.format("localhost:8081/obtenerTodosLibros");
-        HttpResponse<String> response = client.send(
+        try {
+            String url=String.format("http://localhost:8081/obtenerTodosLibros");
+            HttpResponse<String> response = client.send(
                 HttpRequest.newBuilder(new URI(url))
                         .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                         .GET().build(),HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            error = e;
+        }
     }
     @Then("el libro es guardado")
     public void libroGuardado() {
@@ -216,7 +252,7 @@ public class CucumberTestSteps {
         assertEquals(mensajeEsperado, error.getMessage());
     }
     @Then("la actualizacion es rechazada")
-    public void ascensoRechazado() {
+    public void actualizacionRechazada() {
         assert libro.id() != null : "El Libro no tiene un ID asignado";
         Optional<Libro> libroActualizado = App.obtenerLibro(libro.id());
         assert libroActualizado.isPresent() : "Libro no encontrado en el repositorio";
