@@ -38,7 +38,7 @@ Feature: CucumberTest
     Then el libro es rechazado
 
   Scenario: No encuentra libro
-    Given un id de libro vacio
+    Given un libro que no existe
     When el usuario hace un Get
     Then mensaje de error "Libro no encontrado"
 
