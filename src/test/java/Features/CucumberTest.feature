@@ -40,7 +40,7 @@ Feature: CucumberTest
   Scenario: No encuentra libro
     Given un libro que no existe
     When el usuario hace un Get
-    Then mensaje de error "Libro no encontrado"
+    Then libro no encontrado
 
   Scenario: Falla en actualizar libro por autor vacio
     Given un libro titulado Don Quijote De La Mancha por Miguel de Cervantes de genero Comedia

@@ -193,6 +193,7 @@ public class CucumberTestSteps {
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
+            assert libro.title() == "Cinco Semanas en Globo" : "El titulo del libro no coincide";
         } catch (Exception e) {
             error = e;
         }
@@ -206,20 +207,21 @@ public class CucumberTestSteps {
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
+            assert libro.author() == "Miguel de Cervantes Saavedra" : "El autor del libro no coincide";
         } catch (Exception e) {
             error = e;
         }
     }
     @Then("el libro es eliminado")
     public void libroEliminado() {
-        assert libro.id() == null : "El Libro no pudo ser eliminado";
+        assertEquals(null, error);
     }
     @Then("el libro es rechazado")
     public void libroRechazado() {
-        assert libro.id() == null : "El Libro no pudo ser eliminado";
+        assertNotEquals(null, error);
     }
-    @Then("mensaje de error {string}")
-    public void libroNoEncontrado(String mensajeEsperado) {
+    @Then("libro no encontrado")
+    public void libroNoEncontrado() {
         if (error == null) {
             fail("Libro encontrado");
         }
@@ -237,6 +239,7 @@ public class CucumberTestSteps {
         } catch (Exception e) {
             error = e;
         }
+        assertNotEquals(null, error);
     }
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
@@ -252,5 +255,8 @@ public class CucumberTestSteps {
         } catch (Exception e) {
             error = e;
         }
+        assert libro1.title() == "Cinco Semanas en Globo" : "El titulo del libro no coincide";
+        assert libro2.title() == "Don Quijote de la Mancha" : "El titulo del libro no coincide";
+        assert libro3.title() == "La Liga de los Pelirrojos" : "El titulo del libro no coincide";
     }
 }

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="">
+    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Pruebas terminadas?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" afterDir="false" />
@@ -152,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736257610020</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Pruebas terminadas?">
+      <created>1736274523376</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736274523376</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +179,7 @@
     <MESSAGE value="Falta sustituir metodos de la App" />
     <MESSAGE value="Trate de correr las pruebas y me da un monton de IllegalStateException" />
     <MESSAGE value="Las pruebas comienzan a andar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Las pruebas comienzan a andar" />
+    <MESSAGE value="Pruebas terminadas?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pruebas terminadas?" />
   </component>
 </project>
