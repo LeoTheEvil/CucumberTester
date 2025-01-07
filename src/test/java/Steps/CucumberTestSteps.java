@@ -26,7 +26,7 @@ public class CucumberTestSteps {
     Libro libro2;
     Libro libro3;
     Exception error = null;
-
+    int codigo;
     HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 
     @Given("un libro titulado Cinco Semanas en Globo por Julio Verne de genero Aventura")
@@ -61,45 +61,48 @@ public class CucumberTestSteps {
     public void primerLibro() {
         libro1 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro1.title(), libro1.author(), libro1.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro1.id(), libro1.title(), libro1.author(), libro1.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @Given("es el segundo libro")
     public void segundoLibro() {
         libro2 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro2.title(), libro2.author(), libro2.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro2.id(), libro2.title(), libro2.author(), libro2.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @Given("es el tercer libro")
     public void tercerLibro() {
         libro3 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro3.title(), libro3.author(), libro3.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro3.id(), libro3.title(), libro3.author(), libro3.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el libro existe en la base de datos")
     public void libroExisteEnBaseDeDatos() {
         try {
-            String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -107,24 +110,26 @@ public class CucumberTestSteps {
             assert libro.id() != null : "El libro no tiene un ID asignado";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
         try {
-            String url=String.format("http://localhost:8081/guardarLibro?title=%s&author=%s&genre=%s", libro.title(), libro.author(), libro.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro.id(), libro.title(), libro.author(), libro.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario hace un Get")
     public void usuarioHaceGet() {
         try {
-            String url=String.format("http://localhost:8081/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -132,131 +137,135 @@ public class CucumberTestSteps {
             assert libro.id() != null : "El libro no tiene un ID asignado";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario hace un Put de autor Miguel de Cervantes Saavedra")
     public void usuarioHacePutAutor() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
         try {
-            String url=String.format("http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s", libroModificado.title(), libroModificado.author(), libroModificado.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .PUT(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
+            codigo = response.statusCode();
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario hace un Put de autor vacio")
     public void usuarioHacePutAutorVacio() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
         try {
-            String url=String.format("http://localhost:8081/libroAModificar?title=%s&author=%s&genre=%s", libroModificado.title(), libroModificado.author(), libroModificado.genre());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .PUT(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
+            codigo = response.statusCode();
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario hace un Delete")
     public void usuarioHaceDelete() {
         try {
-            String url=String.format("http://localhost:8081/eliminarLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/eliminarLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+                            .DELETE().build(),HttpResponse.BodyHandlers.ofString());
+            codigo = response.statusCode();
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @When("el usuario lista todos los libros empezando por {int} en paginas de {int}")
     public void usuarioListaTodosLibros(int offset, int size) {
         try {
-            String url=String.format("http://localhost:8081/obtenerTodosLibros");
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerTodosLibros");
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @Then("el libro es guardado")
     public void libroGuardado() {
-        assert libro.id() != null : "El libro no tiene un ID asignado";
         try {
-            String url=String.format("http://localhost:8081/obtenerLibro");
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert libro.title() == "Cinco Semanas en Globo" : "El titulo del libro no coincide";
+            assert response.statusCode() == 201 : "El titulo del libro no coincide";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");
         }
     }
     @Then("el autor del libro es actualizado a Miguel de Cervantes Saavedra")
     public void libroActualizado() {
-        assert libro.id() != null : "El Libro no tiene un ID asignado";
         try {
-            String url=String.format("http://localhost:8081/obtenerLibro");
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert libro.author() == "Miguel de Cervantes Saavedra" : "El autor del libro no coincide";
+            assert response.statusCode() == 200 : "El autor del libro no coincide";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");;
         }
     }
     @Then("el libro es eliminado")
     public void libroEliminado() {
-        assertEquals(null, error);
+        assert codigo == 200 : "Fallo en eliminar el libro";
     }
     @Then("el libro es rechazado")
     public void libroRechazado() {
-        assertNotEquals(null, error);
+        assert codigo == 400 : "Fallo en rechazar el libro";
     }
     @Then("libro no encontrado")
     public void libroNoEncontrado() {
         if (error == null) {
             fail("Libro encontrado");
         }
-        assertNotEquals(null, error);
+        assert codigo == 404 : "Libro encontrado";
     }
     @Then("la actualizacion es rechazada")
     public void actualizacionRechazada() {
-        assert libro.id() != null : "El Libro no tiene un ID asignado";
         try {
-            String url=String.format("http://localhost:8081/obtenerLibro");
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
+            assert response.statusCode() == 400 : "Actualizacion no rechazada";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");;
         }
-        assertNotEquals(null, error);
     }
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
-        assert libro1.id() != null : "El Libro no tiene un ID asignado";
-        assert libro2.id() != null : "El libro no tiene un ID asignado";
-        assert libro3.id() != null : "El libro no tiene un ID asignado";
         try {
-            String url=String.format("http://localhost:8081/obtenerTodosLibros");
+            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerTodosLibros");
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
                             .GET().build(),HttpResponse.BodyHandlers.ofString());
+            assert response.statusCode() == 200 : "Libros no encontrados";
         } catch (Exception e) {
             error = e;
+            fail("Fallo la conexion");;
         }
-        assert libro1.title() == "Cinco Semanas en Globo" : "El titulo del libro no coincide";
-        assert libro2.title() == "Don Quijote de la Mancha" : "El titulo del libro no coincide";
-        assert libro3.title() == "La Liga de los Pelirrojos" : "El titulo del libro no coincide";
     }
 }

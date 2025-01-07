@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Pruebas terminadas?">
+    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Assert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,9 +86,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Scenario: Nuevo libro" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/java/Features/CucumberTest.feature" />
+      <option name="GLUE" value="Steps" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="CucumberTester" />
+      <option name="NAME_FILTER" value="^Nuevo libro$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Nuevo libro$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Nuevo libro" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Cucumber Java.Feature: CucumberTest" />
+        <item itemvalue="Cucumber Java.Scenario: Nuevo libro" />
         <item itemvalue="Cucumber Java.Scenario: No encuentra libro" />
       </list>
     </recent_temporary>
@@ -159,7 +179,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736274523376</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Assert">
+      <created>1736276360058</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736276360058</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,6 +207,7 @@
     <MESSAGE value="Trate de correr las pruebas y me da un monton de IllegalStateException" />
     <MESSAGE value="Las pruebas comienzan a andar" />
     <MESSAGE value="Pruebas terminadas?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pruebas terminadas?" />
+    <MESSAGE value="Assert" />
+    <option name="LAST_COMMIT_MESSAGE" value="Assert" />
   </component>
 </project>
