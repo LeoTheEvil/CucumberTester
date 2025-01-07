@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Assert">
+    <list default="true" id="dbb0b1ee-cc63-45bb-9f30-b216a75f033b" name="Changes" comment="Fallan todos los tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Steps/CucumberTestSteps.java" afterDir="false" />
     </list>
@@ -186,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736276360058</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fallan todos los tests">
+      <created>1736282180884</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1736282180884</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,6 +215,7 @@
     <MESSAGE value="Las pruebas comienzan a andar" />
     <MESSAGE value="Pruebas terminadas?" />
     <MESSAGE value="Assert" />
-    <option name="LAST_COMMIT_MESSAGE" value="Assert" />
+    <MESSAGE value="Fallan todos los tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fallan todos los tests" />
   </component>
 </project>

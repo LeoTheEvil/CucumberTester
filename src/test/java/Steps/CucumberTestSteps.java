@@ -61,7 +61,7 @@ public class CucumberTestSteps {
     public void primerLibro() {
         libro1 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro1.id(), libro1.title(), libro1.author(), libro1.genre());
+            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro1.id(), libro1.title(), libro1.author(), libro1.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -75,7 +75,7 @@ public class CucumberTestSteps {
     public void segundoLibro() {
         libro2 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro2.id(), libro2.title(), libro2.author(), libro2.genre());
+            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro2.id(), libro2.title(), libro2.author(), libro2.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -89,7 +89,7 @@ public class CucumberTestSteps {
     public void tercerLibro() {
         libro3 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro3.id(), libro3.title(), libro3.author(), libro3.genre());
+            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro3.id(), libro3.title(), libro3.author(), libro3.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -102,7 +102,7 @@ public class CucumberTestSteps {
     @When("el libro existe en la base de datos")
     public void libroExisteEnBaseDeDatos() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -116,7 +116,7 @@ public class CucumberTestSteps {
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro.id(), libro.title(), libro.author(), libro.genre());
+            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro.id(), libro.title(), libro.author(), libro.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -129,7 +129,7 @@ public class CucumberTestSteps {
     @When("el usuario hace un Get")
     public void usuarioHaceGet() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -144,7 +144,7 @@ public class CucumberTestSteps {
     public void usuarioHacePutAutor() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
+            String url=String.format("http://localhost:8081/api/books/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -159,7 +159,7 @@ public class CucumberTestSteps {
     public void usuarioHacePutAutorVacio() {
         Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
+            String url=String.format("http://localhost:8081/api/books/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -173,7 +173,7 @@ public class CucumberTestSteps {
     @When("el usuario hace un Delete")
     public void usuarioHaceDelete() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/eliminarLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/eliminarLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -187,7 +187,7 @@ public class CucumberTestSteps {
     @When("el usuario lista todos los libros empezando por {int} en paginas de {int}")
     public void usuarioListaTodosLibros(int offset, int size) {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerTodosLibros");
+            String url=String.format("http://localhost:8081/api/books/obtenerTodosLibros");
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -200,7 +200,7 @@ public class CucumberTestSteps {
     @Then("el libro es guardado")
     public void libroGuardado() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -214,7 +214,7 @@ public class CucumberTestSteps {
     @Then("el autor del libro es actualizado a Miguel de Cervantes Saavedra")
     public void libroActualizado() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -243,7 +243,7 @@ public class CucumberTestSteps {
     @Then("la actualizacion es rechazada")
     public void actualizacionRechazada() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerLibro?id=%d", libro.id());
+            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
@@ -257,7 +257,7 @@ public class CucumberTestSteps {
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
         try {
-            String url=String.format("http://localhost:8081/swagger-ui/index.html#/controlador-libro/obtenerTodosLibros");
+            String url=String.format("http://localhost:8081/api/books/obtenerTodosLibros");
             HttpResponse<String> response = client.send(
                     HttpRequest.newBuilder(new URI(url))
                             .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
