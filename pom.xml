@@ -50,14 +50,24 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>2.7.6</version>  <!-- Asegúrate de que esta versión coincide con la de tu proyecto -->
+      <version>2.7.6</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>5.3.10</version> <!-- Asegúrate de que la versión coincida con tu versión de Spring -->
+      <version>5.3.10</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>5.3.39</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
@@ -126,6 +136,11 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.32</version> <!-- Versión de SLF4J -->
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
     </dependency>
   </dependencies>
 

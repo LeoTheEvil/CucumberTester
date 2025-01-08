@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.cucumber.spring.CucumberContextConfiguration;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,42 +13,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpClient.Redirect;
-import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.charset.StandardCharsets;
 
 @CucumberContextConfiguration
 public class CucumberTestSteps {
 
+    ObjectMapper objectMapper = new ObjectMapper();
     Libro libro;
     Libro libro1;
     Libro libro2;
     Libro libro3;
-    Exception error = null;
     int codigo;
     HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 
     @Given("un libro titulado Cinco Semanas en Globo por Julio Verne de genero Aventura")
     public void tituloCincoSemanasEnGlobo() {
-        libro = new Libro(0,"Cinco Semanas en Globo","Julio Verne","Aventura");
+        libro = new Libro(0,"Cinco_Semanas_en_Globo","Julio_Verne","Aventura");
     }
     @Given("un libro titulado Don Quijote De La Mancha por Miguel de Cervantes de genero Comedia")
     public void tituloDonQuijoteDeLaMancha() {
-        libro = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes","Comedia");
+        libro = new Libro(0,"Don_Quijote_De_La_Mancha","Miguel_de_Cervantes","Comedia");
     }
     @Given("un libro titulado La Liga de los Pelirrojos por Sir Arthur Conan Doyle de genero Misterio")
     public void tituloLaLigaDeLosPelirrojos() {
-        libro = new Libro(0,"La Liga de los Pelirrojos","Sir Arthur Conan Doyle","Misterio");
+        libro = new Libro(0,"La_Liga_de_los_Pelirrojos","Sir_Arthur_Conan_Doyle","Misterio");
     }
     @Given("un libro sin titulo por Miguel de Cervantes de genero Comedia")
     public void unLibroSinTitulo() {
-        libro = new Libro(0,"","Miguel de Cervantes","Comedia");
+        libro = new Libro(0,"","Miguel_de_Cervantes","Comedia");
     }
     @Given("un libro titulado Comillas por Miguel de Cervantes de genero Comedia")
     public void unLibroTituladoComillas() {
-        libro = new Libro(0,"\"","Miguel de Cervantes","Comedia");
+        libro = new Libro(0,"\"","Miguel_de_Cervantes","Comedia");
     }
     @Given("un libro que no existe")
     public void libroNoExiste() {
@@ -55,174 +55,159 @@ public class CucumberTestSteps {
     }
     @Given("un libro titulado Don Quijote De La Mancha por Miguel de Cervantes sin genero")
     public void sinGenero() {
-        Libro libro = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes","");
+        Libro libro = new Libro(0,"Don_Quijote_De_La_Mancha","Miguel_de_Cervantes","");
     }
     @Given("es el primer libro")
     public void primerLibro() {
         libro1 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro1.id(), libro1.title(), libro1.author(), libro1.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+            String json = objectMapper.writeValueAsString(libro1);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @Given("es el segundo libro")
     public void segundoLibro() {
         libro2 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro2.id(), libro2.title(), libro2.author(), libro2.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+            String json = objectMapper.writeValueAsString(libro2);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @Given("es el tercer libro")
     public void tercerLibro() {
         libro3 = new Libro(libro.id(), libro.title(), libro.author(), libro.genre());
         try {
-            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro3.id(), libro3.title(), libro3.author(), libro3.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+            String json = objectMapper.writeValueAsString(libro3);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el libro existe en la base de datos")
     public void libroExisteEnBaseDeDatos() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+            String json = objectMapper.writeValueAsString(libro);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             assert libro.id() != null : "El libro no tiene un ID asignado";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario hace un Post")
     public void usuarioHacePost() {
         try {
-            String url=String.format("http://localhost:8081/api/books/guardarLibro?id=%d&title=%s&author=%s&genre=%s", libro.id(), libro.title(), libro.author(), libro.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .POST(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+            String json = objectMapper.writeValueAsString(libro);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            codigo = response.statusCode();
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario hace un Get")
     public void usuarioHaceGet() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             assert libro.id() != null : "El libro no tiene un ID asignado";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario hace un Put de autor Miguel de Cervantes Saavedra")
     public void usuarioHacePutAutor() {
-        Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","Miguel de Cervantes Saavedra","Comedia");
+        Libro libroModificado = new Libro(0,"Don_Quijote_De_La_Mancha","Miguel_de_Cervantes_Saavedra","Comedia");
         try {
-            String url=String.format("http://localhost:8081/api/books/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .PUT(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
+            String json = objectMapper.writeValueAsString(libroModificado);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .PUT(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             codigo = response.statusCode();
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario hace un Put de autor vacio")
     public void usuarioHacePutAutorVacio() {
-        Libro libroModificado = new Libro(0,"Don Quijote De La Mancha","","Comedia");
+        Libro libroModificado = new Libro(0,"Don_Quijote_De_La_Mancha","","Comedia");
         try {
-            String url=String.format("http://localhost:8081/api/books/libroAModificar?id=%d&title=%s&author=%s&genre=%s", libroModificado.id(), libroModificado.title(), libroModificado.author(), libroModificado.genre());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .PUT(HttpRequest.BodyPublishers.ofString(url)).build(),HttpResponse.BodyHandlers.ofString());
+            String json = objectMapper.writeValueAsString(libroModificado);
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .PUT(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8)).build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             codigo = response.statusCode();
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario hace un Delete")
     public void usuarioHaceDelete() {
         try {
-            String url=String.format("http://localhost:8081/api/books/eliminarLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .DELETE().build(),HttpResponse.BodyHandlers.ofString());
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .DELETE().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             codigo = response.statusCode();
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @When("el usuario lista todos los libros empezando por {int} en paginas de {int}")
     public void usuarioListaTodosLibros(int offset, int size) {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerTodosLibros");
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
-        }
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://localhost:8081/api/books"))
+                    .header("Content-Type", "application/json")
+                    .header("accept", "*/*")
+                    .GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());        }
     }
     @Then("el libro es guardado")
     public void libroGuardado() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert response.statusCode() == 201 : "El titulo del libro no coincide";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");
+            assert codigo == 201 : "El titulo del libro no coincide";
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @Then("el autor del libro es actualizado a Miguel de Cervantes Saavedra")
     public void libroActualizado() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert response.statusCode() == 200 : "El autor del libro no coincide";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");;
+            assert codigo == 200 : "El autor del libro no coincide";
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @Then("el libro es eliminado")
@@ -235,37 +220,22 @@ public class CucumberTestSteps {
     }
     @Then("libro no encontrado")
     public void libroNoEncontrado() {
-        if (error == null) {
-            fail("Libro encontrado");
-        }
         assert codigo == 404 : "Libro encontrado";
     }
     @Then("la actualizacion es rechazada")
     public void actualizacionRechazada() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerLibro?id=%d", libro.id());
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert response.statusCode() == 400 : "Actualizacion no rechazada";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");;
+            assert codigo == 400 : "Actualizacion no rechazada";
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
     @Then("muestra una lista de todos los libros")
     public void muestraListaTodosLibros() {
         try {
-            String url=String.format("http://localhost:8081/api/books/obtenerTodosLibros");
-            HttpResponse<String> response = client.send(
-                    HttpRequest.newBuilder(new URI(url))
-                            .headers("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0)")
-                            .GET().build(),HttpResponse.BodyHandlers.ofString());
-            assert response.statusCode() == 200 : "Libros no encontrados";
-        } catch (Exception e) {
-            error = e;
-            fail("Fallo la conexion");;
+            assert codigo == 200 : "Libros no encontrados";
+        } catch (Exception ConnectionError) {
+            fail(ConnectionError.getMessage());
         }
     }
 }
